@@ -1,0 +1,23 @@
+.board {
+	display: flex;
+	flex-direction: column;
+}
+
+.row {
+
+	background: red;
+	height: 100px;
+}
+
+.cell {
+	display: inline-block;
+	background: green;
+	width: 100px;
+	height: 100px;
+	border: 1px solid black;
+	border-right: 0px;
+}
+
+.cell:last-child() {
+	border-right: 1px solid black;
+}
