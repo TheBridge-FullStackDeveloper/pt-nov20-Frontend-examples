@@ -12,7 +12,6 @@
 
 	console.groupEnd();
 }
-
 {
 	console.group("Código síncrono con funciones");
 	/*
@@ -35,9 +34,7 @@
 	console.log("Clara ha sido saludada");
 
 	console.groupEnd();
-
 }
-
 {
 	/*
 		Pero entonces aparecen los eventos, los cuales no hacen el código asíncrono, pero no podemos
@@ -80,7 +77,6 @@
 	}, Math.random() * 100);
 	console.log("%csetTimeOuts:%c Post setTimeOut", "color: blue", "color: inherit");
 }
-
 {
 	// Otro ejemplo podrían ser varios setTimeOuts
 
@@ -96,8 +92,6 @@
 		console.log("%csetTimeOuts2%c C", "color: green", "color: inherit")
 	}, Math.random() * 10)
 }
-
-
 {
 	/*
 		Debido al callback hell surgen las promesas, un objeto que "nos hará la vida más fácil"
@@ -152,34 +146,53 @@
 		console.log("%cPromise Generator%c Rechazado: %s", "color: cyan", "color: red", msg)
 	});
 }
+{
+	/*
+		De momento no hemos encontrado una explicación para usar promesas
+		la encontraremos cuando hagamos peticiones a APIs, mientras tanto
+		vamos a poner el ejemplo de una función que consuma muchos recursos (tiempo)
 
-function generateArray(n, value) {
-	return new Promise((resolve) => {
-		const arr = [];
+		En este caso, una función que genere un array inmensamente grande, la cual
+		bloquearía el hilo (thread) para generar el array.
 
-		for (let i = 0; i < n; i++) {
-			arr.push(value(i));
-		}
-
-		resolve(arr);
-
-	})
-}
-
-function generateArray2(n, value, callback) {
-	generateArray(n, value).then(callback);
-}
-
-function generateArray3(n, value) {
-	return new Promise(resolve => {
-		generateArray2(n, value, (arr) => {
+		Sin embargo, si hacemos que esta función sea asíncrona no se bloqueará
+		el monohilo y ganaremos en eficiencia.
+	*/
+	function generateArray(n, value) {
+		// Retornamos una promesa que resolverá cuando se complete el bucle
+		return new Promise((resolve) => {
+			const arr = [];
+			for (let i = 0; i < n; i++) {
+				arr.push(value(i));
+			}
 			resolve(arr);
+		})
+	}
+
+	/*
+		Si quisieramos convertir la asincronía por promesa en una
+		por callback, sería tan fácil como el siguiente ejemplo:
+	*/
+
+	// Pedimos una función de callback
+	function generateArray2(n, value, callback) {
+		// Una vez se resuelve la promesa, llamamos a la función de callback
+		generateArray(n, value).then(callback);
+	}
+
+	// Si quisiesemos volver a una función de promesa
+	// Para aprender a hacer funciones con promesas en lugar de callbacks
+	function generateArray3(n, value) {
+		// Retornamos una promesa que
+		return new Promise(resolve => {
+			// Resuelve una vez se llama a la función de callback
+			generateArray2(n, value, (arr) => {
+				resolve(arr);
+			});
 		});
-	});
+	}
+
+	console.log("%cGenerate array%c Generar array:", "color: fuchsia", "color: inherit");
+	generateArray3(5000, (i) => i ** 2).then(arr => console.log("%cGenerate array%c %o", "color: fuchsia", "color: inherit", arr));
+	console.log("%cGenerate array%c Array Generado (mentira, la anterior es asíncrona)", "color: fuchsia", "color: inherit");
 }
-
-
-
-console.log("Generar array:");
-generateArray3(5, (i) => i ** 2).then(arr => console.log(arr));
-console.log("Array Generado");
