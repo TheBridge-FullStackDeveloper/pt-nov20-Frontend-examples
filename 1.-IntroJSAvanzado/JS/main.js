@@ -180,54 +180,94 @@ ${[1, 2, 3]}`;
 {
 	console.group("Example with DOM and localStorage")
 
+	// Seleccionamos el body para crear en su interior los elementos que crearemos a continuación
 	let body = document.querySelector("body");
+	console.log("Tenemos el body:", body);
 
+	// Declaramos la puntuación y la inicializamos a 0
 	let score = 0;
 
+	// Creamos un botón con el texto "Incrementar puntuación"
 	let btnIncrement = document.createElement("button");
 	btnIncrement.innerText = "Incrementar puntuación";
 
+	// Creamos un botón con el texto "Ver máxima puntuación"
 	let btnGetHighScore = document.createElement("button");
 	btnGetHighScore.innerText = "Ver máxima puntuación";
 
+	// Creamos un botón con el texto "Guardar puntuación"
 	let btnSaveScore = document.createElement("button");
 	btnSaveScore.innerText = "Guardar puntuación";
 
+	// Cremos un párrafo con el texto ${score} (El valor de la variable score)
 	let currentScore = document.createElement("p");
 	currentScore.innerText = score;
 
-
+	// Agregamos todos los elementos al body
 	body.appendChild(btnIncrement);
 	body.appendChild(btnGetHighScore);
 	body.appendChild(btnSaveScore);
 	body.appendChild(currentScore);
 
 
+	// Una vez se hace click en el botón de incrementar se suma 10 a la puntuación
+	// Y se actualiza el innerText del párrafo
 	btnIncrement.addEventListener("click", function () {
 		score += 10;
 		currentScore.innerText = score;
 	});
 
+	// Cuando se hace click ene el botón de obtener la máxima puntuación, lo obtenemos del localStorage
 	btnGetHighScore.addEventListener("click", function () {
+		console.group("Acción del botón getHighScore");
+
 		let highScore = localStorage.getItem("highScore");
-		console.log(highScore);
+		console.log("HighScore del localStorage: %c%s", "color:purple", highScore);
+
+		console.groupEnd();
 	});
 
+	// Cuando se hace click en el botón de guardar puntuación lo guardamos en el localStorage si es mayor
+	// que el que estaba previamente guardado
 	btnSaveScore.addEventListener("click", function () {
+		console.group("Acción del botón btnSaveScore");
 		let highScore = localStorage.getItem("highScore");
-		if (score > highScore)
+		console.log("Obtenemos el valor del actual highScore %c%s", "color:purple", highScore);
+		if (score > highScore) {
 			localStorage.setItem("highScore", score);
+
+			console.log("Como la puntuación actual es mayor que la guardada, guardamos esta nueva puntuación");
+			// Imprimimos la puntuación del localStorage para que se vea que se ha cambiado
+			console.log("La nueva puntuación es: %c%s", "color:green", localStorage.getItem("highScore"));
+		}
+		else {
+			console.log("Como la puntuación es menor, no la guardamos");
+			console.log("Tienes %c%s%c puntos, pero la puntuación sigue siendo %c%s", "color:red", score, "color:black", "color:green", localStorage.getItem("highScore"));
+		}
+		console.groupEnd();
 	});
 
+	console.groupEnd();
+}
 
+{
+	console.group("Guardando objetos en el webStorage")
+
+	// Para guardar un objeto en el localStorage o sessionStorage es necesario stringificarlo (convertirlo a string)
+	// Para ello usamos el método JSON.stringify();
 	localStorage.setItem("storedObject", JSON.stringify({ nombre: "Miguel" }))
 
+	// Vamos a ver que valor se ha guardado
 	let objectFromLocalStorage = localStorage.getItem("storedObject");
-	let convertedToObject = JSON.parse(objectFromLocalStorage);
-	console.log(convertedToObject);
+	console.log("El valor guardado es un string: %c%s", "color:orange", objectFromLocalStorage);
 
-	// console.log(JSON.stringify({ nombre: "Miguel" }) + "Hola")
-	// console.log(JSON.stringify([1, 2, 3]));
+	// El objeto, no es un objeto, es un string, por ello debemos convertirlo a JSON parseandolo:
+	// JSON.parse(string);
+	console.log("Para verlo como JSON, debemos parsarlo");
+	let convertedToObject = JSON.parse(objectFromLocalStorage);
+	console.log("Una vez parseado queda como:", convertedToObject);
+
+	console.log("También se pueden parsear arrays: %o => %c%s", [1, 2, 3], "color: orange", JSON.stringify([1, 2, 3]));
 
 	console.groupEnd();
 }
