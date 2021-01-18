@@ -242,7 +242,7 @@ ${[1, 2, 3]}`;
 		}
 		else {
 			console.log("Como la puntuación es menor, no la guardamos");
-			console.log("Tienes %c%s%c puntos, pero la puntuación sigue siendo %c%s", "color:red", score, "color:black", "color:green", localStorage.getItem("highScore"));
+			console.log("Tienes %c%s%c puntos, pero la puntuación sigue siendo %c%s", "color:red", score, "color:inherit", "color:green", localStorage.getItem("highScore"));
 		}
 		console.groupEnd();
 	});

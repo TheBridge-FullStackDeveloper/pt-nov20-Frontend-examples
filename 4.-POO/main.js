@@ -79,7 +79,7 @@ class Termometro {
 		this.temperatura = temperatura;
 		this.count = 0;
 		this.changes = 0;
-		this._color = "black";
+		this._color = "inherit";
 	}
 
 	/*
