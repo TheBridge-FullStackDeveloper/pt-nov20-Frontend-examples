@@ -88,7 +88,7 @@ function paintWeatherData(name, weather) {
 }
 
 function getWeatherData(query) {
-	const apiKey = "289db213072c5d6b80129983aae9b570";
+	const apiKey = "";
 
 	fetch(`https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&units=metrics&lang=es`)
 	.then(response => response.json())

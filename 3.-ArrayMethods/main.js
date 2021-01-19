@@ -1,3 +1,167 @@
+/*
+	Array Methods:
+
+	.map
+	.filter
+	.reduce
+	.sort
+*/
+
+{
+	console.group("typeof");
+
+	/*
+	Hay veces en las que necesitamos no solo comprobar el valor de una variable, si no que también
+	puede llegar a ser imprescindible saber su tipo, para ello existe un operador especial
+
+	typeof
+
+	typeof es un operador que nos da el tipo de dato de dicha variable, veamos su uso:
+	*/
+
+	// Strings
+	const str = "Hola"
+	console.log("typeof str = %c%s", "color: orange", typeof str);
+
+	// Numbers
+	const nbr = 1;
+	console.log("typeof nbr = %c%s", "color: orange", typeof nbr);
+
+	// Objects
+	const json = {a: 1};
+	console.log("typeof json = %c%s", "color: orange", typeof json);
+
+	const array = [1, 2, 3];
+	console.log("typeof array = %c%s", "color: orange", typeof array);
+
+	// Como podemos ver, para las estructuras complejas no nos sirve el typeof
+	console.info("Como podemos ver, para las estructuras complejas no nos sirve el typeof");
+
+	console.log("Ejemplo útil:")
+
+	function suma(a, b) {
+		// Comprobamos si a y b son números
+		if (typeof a === "number" && typeof b === "number")
+			return a + b;
+		// Si no, retornamos Not a Number
+		return NaN;
+	}
+
+	console.log("suma(1, 2) =", suma(1, 2));
+	console.log("suma(2, 'a') =", suma(2, "a"));
+	console.log("suma('a', 2) =", suma("a", 2));
+
+	console.groupEnd();
+}
+
+{
+	console.group("Check if is array");
+
+	// Solo podemos saber si un objeto es un array, para ello usamos un método de la clase Array
+	console.info("Solo podemos saber si un objeto es un array, para ello usamos un método de la clase Array");
+
+	const array = [1, 2, 3];
+	console.log("Array.isArray(array) = %c%s", "color: orange", Array.isArray(array));
+
+	console.groupEnd();
+}
+
+
+{
+	console.group("Array methods");
+	/*
+		Trabajar con arrays es muy cómodo, al menos si conoces los métodos adecuados, aquí tienes
+		un ejemplo de unos pocos:
+	*/
+
+	{
+		console.group("includes");
+			/*
+				[].includes permite buscar si un elemento dentro del array
+
+				Su uso sería igual dentro de un string, para buscar strings
+			*/
+			const json = {a: 1}
+			const array = ["hola", 3, json, [], "adios"];
+
+			console.log(array);
+
+			console.log("array.includes('hola') =", array.includes("hola"));
+			console.log("array.includes(3) =", array.includes(3));
+			console.log("array.includes({a: 1}) =", array.includes({a: 1}));
+			console.info("No incluye al json, porque son diferentes, si buscamos el mismo, dará true");
+			console.log("array.includes(json) =", array.includes(json));
+
+		console.groupEnd();
+	}
+
+	{
+		console.group("indexOf");
+			/*
+				[].indexOf permite buscar donde se encuentra un elemento en un array
+				Si no encuentra al elemento, devuelve -1
+
+				Su uso sería igual dentro de un string, para buscar strings
+			*/
+			const json = {a: 1}
+			const array = ["hola", 3, json, [], "adios"];
+
+			console.log(array);
+
+			console.log("array.indexOf('hola') =", array.indexOf("hola"));
+			console.log("array.indexOf(3) =", array.indexOf(3));
+			console.log("array.indexOf({a: 1}) =", array.indexOf({a: 1}));
+			console.info("No incluye al json, porque son diferentes, si buscamos el mismo, dará su posición");
+			console.log("array.indexOf(json) =", array.indexOf(json));
+
+		console.groupEnd();
+	}
+
+	{
+		console.group("join");
+
+		/*
+			Habrá ocasiones en las que quieras formar un string con el contenido del array,
+			para ello podrás usar [].join
+
+			[].join acepta como parámetro un separador para el string resultante
+		*/
+
+		const array = ["Hola", "Qué", "Tal", 42];
+		console.log(array);
+
+		console.log("array.join() = %c%s", "color: orange", array.join());
+		console.log("array.join(' ') = %c%s", "color: orange", array.join(" "));
+		console.log("array.join(', ') = %c%s", "color: orange", array.join(", "));
+		console.log("array.join(';') = %c%s", "color: orange", array.join(";"));
+
+		console.groupEnd();
+	}
+
+	{
+		console.group("split");
+
+		/*
+			Puedes tener el caso contrario, un string que quieras partir en un array
+
+			[].split une un string en un array, para ello puedes dar un delimitador
+		*/
+
+		const string = "Hola, ¿qué tal estás?; yo bien"
+		console.log(string);
+
+		console.log("string.split() = %c%s", "color: orange", string.split());
+		console.log("string.split(' ') = %c%s", "color: orange", string.split(" "));
+		console.log("string.split(', ') = %c%s", "color: orange", string.split(", "));
+		console.log("string.split(';') = %c%s", "color: orange", string.split(";"));
+
+		console.groupEnd();
+	}
+
+
+	console.groupEnd();
+}
+
 // // /*
 // // 	["Hola", "Mundo", "Cruel"]
 // // 	tiene el string "Bonito"?
@@ -185,4 +349,5 @@ const result = people.filter(person => person.age < 18).map(person => {
 	}
 }).reduce((totalAges, person) => totalAges + person.age, 0);
 console.log(result);
+
 

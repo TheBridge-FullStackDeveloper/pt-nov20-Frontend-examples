@@ -11,6 +11,7 @@
 	console.log(3);
 
 	console.groupEnd();
+
 }
 {
 	console.group("Código síncrono con funciones");
