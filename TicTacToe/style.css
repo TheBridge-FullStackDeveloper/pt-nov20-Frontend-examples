@@ -14,7 +14,7 @@
 	background: green;
 	width: 100px;
 	height: 100px;
-	border: 1px solid black;
+	border: 1px solid inherit;
 	border-right: 0px;
 }
 
